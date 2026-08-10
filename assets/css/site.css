@@ -410,6 +410,62 @@ section { position: relative; }
   z-index: -1;
 }
 
+/* ------------------------------------ Drei Saeulen direkt unter dem Titel */
+.saeulen-band {
+  background: var(--leinen-tief);
+  border-bottom: 1px solid rgba(10, 74, 32, .12);
+  padding: clamp(2.6rem, 2rem + 2.4vw, 4rem) 0;
+}
+.saeulen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.8rem, 4vw, 4rem);
+}
+.saeulen li { position: relative; }
+.saeulen li + li::before {
+  content: '';
+  position: absolute;
+  left: clamp(-.9rem, -2vw, -2rem);
+  top: .2rem;
+  bottom: .2rem;
+  width: 1px;
+  background: rgba(10, 74, 32, .16);
+}
+.saeule-zahl {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 1.8rem + 1.7vw, 3.4rem);
+  line-height: 1;
+  color: var(--safran);
+  margin-bottom: .45rem;
+  font-variation-settings: 'WONK' 1, 'opsz' 72;
+}
+.saeulen h3 {
+  font-family: var(--sans);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gruen);
+  margin-bottom: .5em;
+  line-height: 1.4;
+}
+.saeulen p {
+  font-size: .93rem;
+  line-height: 1.6;
+  color: var(--grau);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .saeulen { grid-template-columns: 1fr; gap: 1.6rem; }
+  .saeulen li + li::before { display: none; }
+  .saeulen li + li { border-top: 1px solid rgba(10, 74, 32, .14); padding-top: 1.6rem; }
+}
+
 /* --------------------------------------------------------------- Angebote */
 .angebote {
   display: grid;

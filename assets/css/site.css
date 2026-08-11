@@ -157,6 +157,27 @@ section { position: relative; }
 .abschnitt { padding: clamp(4.5rem, 3rem + 7vw, 9rem) 0; }
 .abschnitt--eng { padding: clamp(3.5rem, 2.5rem + 4vw, 6rem) 0; }
 
+/* Abschnitte, die über das Menü angesprungen werden, füllen mindestens einen
+   Bildschirm und rücken ihren Inhalt in die Mitte. Sonst ragt beim Sprung der
+   nächste Abschnitt angeschnitten von unten herein. Wer von Hand scrollt,
+   merkt nichts davon, längere Abschnitte bleiben unverändert. */
+.voll {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* Damit auch hohe Bilder in den Bildschirm passen und nicht unten abreissen */
+.voll .duo-bild img {
+  max-height: 66svh;
+  width: 100%;
+  object-fit: cover;
+  object-position: center 26%;
+}
+
+/* Die feste Kopfzeile darf den Anfang eines Abschnitts nicht verdecken */
+[id] { scroll-margin-top: 5.5rem; }
+
 .flaeche-hell  { background: var(--leinen-hell); }
 .flaeche-tief  { background: var(--leinen-tief); }
 .flaeche-gruen { background: var(--gruen-tief); color: var(--leinen); }
@@ -716,6 +737,26 @@ form { display: grid; gap: 1.25rem; }
   border-bottom: 1px solid rgba(10, 74, 32, .14);
 }
 .seitenkopf h1 { font-size: clamp(2.2rem, 1.5rem + 3vw, 4rem); margin-bottom: .25em; }
+
+/* Kopf mit Portraet daneben, zusammen genau ein Bildschirm */
+.seitenkopf--duo {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(7rem, 10vw, 9rem) clamp(2.5rem, 5vw, 4rem);
+}
+.seitenkopf--duo .duo { align-items: center; }
+.seitenkopf--duo .duo-bild img {
+  max-height: min(62svh, 620px);
+  width: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+.seitenkopf--duo h1 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
+@media (max-width: 900px) {
+  .seitenkopf--duo { min-height: 0; display: block; }
+  .seitenkopf--duo .duo-bild img { max-height: 46svh; object-position: center 20%; }
+}
 
 .lauftext h2 { margin-top: 2.6em; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem); }
 .lauftext h2:first-child { margin-top: 0; }

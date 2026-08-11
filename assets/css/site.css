@@ -216,6 +216,17 @@ section { position: relative; }
   box-shadow: 0 1px 0 rgba(10, 74, 32, .12);
 }
 
+/* WICHTIG. backdrop-filter macht die Kopfzeile zum Bezugsrahmen für alles,
+   was darin position fixed ist. Das Menü am Handy wäre dadurch nur so groß
+   wie die Kopfzeile selbst und ließe sich nur ganz oben auf der Seite
+   öffnen. Solange das Menü offen ist, deckt es ohnehin alles ab, deshalb
+   braucht die Kopfzeile dann weder Hintergrund noch Filter. */
+body.nav-offen .kopf {
+  backdrop-filter: none;
+  background: transparent;
+  box-shadow: none;
+}
+
 .kopf-logo { display: flex; align-items: center; text-decoration: none; }
 .kopf-logo img {
   height: clamp(44px, 5vw, 62px);
@@ -272,21 +283,36 @@ section { position: relative; }
 .kopf-tel::after { display: none; }
 .kopf-tel:hover { background: var(--safran); border-color: var(--safran); color: var(--gruen-tief) !important; }
 
+/* Der Schalter steht am Handy direkt auf dem Titelbild. Dünne weiße Striche
+   verschwinden dort je nach Bildstelle, deshalb bekommt er eine eigene
+   Fläche, die auf hellem wie auf dunklem Grund trägt. */
 .nav-schalter {
   display: none;
-  background: none;
-  border: 0;
-  padding: .4rem;
+  width: 48px;
+  height: 48px;
+  padding: 0;
   cursor: pointer;
   color: #fff;
+  background: rgba(5, 48, 20, .55);
+  border: 1px solid rgba(255, 255, 255, .4);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  transition: background .35s var(--ruhig), border-color .35s var(--ruhig),
+              color .35s var(--ruhig);
+  flex: 0 0 auto;
 }
-.kopf--gesetzt .nav-schalter, .kopf--fest .nav-schalter { color: var(--gruen-tief); }
+.kopf--gesetzt .nav-schalter, .kopf--fest .nav-schalter {
+  color: var(--gruen-tief);
+  background: rgba(247, 241, 229, .85);
+  border-color: rgba(10, 74, 32, .3);
+}
 .nav-schalter span {
   display: block;
-  width: 26px;
+  width: 22px;
   height: 2px;
   background: currentColor;
-  margin: 5px 0;
+  margin: 5px auto;
+  border-radius: 2px;
   transition: transform .35s var(--ruhig), opacity .25s;
 }
 .nav-offen .nav-schalter span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -871,7 +897,14 @@ form { display: grid; gap: 1.25rem; }
   }
   .nav-offen .kopf-nav { opacity: 1; pointer-events: auto; transform: none; }
   .nav-offen .kopf-nav a { color: var(--leinen) !important; text-shadow: none; }
-  .nav-offen .nav-schalter { position: relative; z-index: 2; color: var(--leinen); }
+  /* Im offenen Menü immer dieselbe Optik, unabhaengig von der Scrollposition */
+  body.nav-offen .nav-schalter {
+    position: relative;
+    z-index: 2;
+    color: var(--leinen);
+    background: rgba(247, 241, 229, .12);
+    border-color: rgba(247, 241, 229, .45);
+  }
   .kopf-tel { border-color: var(--safran-hell); }
 
   .feld-paar { grid-template-columns: 1fr; }

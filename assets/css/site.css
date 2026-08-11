@@ -187,6 +187,15 @@ section { position: relative; }
 .flaeche-gruen { background: var(--gruen-tief); color: var(--leinen); }
 .flaeche-gruen p { color: #cfd8ca; }
 
+
+/* Der Vertrauens-Abschnitt steht auf dunklem Grund, damit die Seite zwischen
+   den vielen hellen Flaechen zwei ruhige Anker bekommt, das Zitat oben und
+   diesen hier weiter unten. */
+.flaeche-gruen h2 { color: #fff; }
+.flaeche-gruen .schritt { border-top-color: var(--safran-hell); }
+.flaeche-gruen .schritt h3 { color: var(--safran-blass); }
+.flaeche-gruen .schritt p { color: rgba(247, 241, 229, .74); }
+
 /* --------------------------------------------------------------- Kopfzeile */
 .kopf {
   position: fixed;

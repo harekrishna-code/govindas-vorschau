@@ -57,6 +57,8 @@
 
   --bahn: min(1200px, 100% - 3rem);
   --bahn-schmal: min(760px, 100% - 3rem);
+  /* Abstand von der Bahn zum Bildschirmrand, fuer Bilder die hinauslaufen */
+  --seitenrand: max(1.5rem, calc((100vw - 1200px) / 2));
   --ruhig: cubic-bezier(.22, .61, .36, 1);
 }
 
@@ -167,12 +169,14 @@ section { position: relative; }
   flex-direction: column;
   justify-content: center;
 }
-/* Damit auch hohe Bilder in den Bildschirm passen und nicht unten abreissen */
+/* Hohe Bilder passen in den Bildschirm, indem sie kleiner werden, nicht indem
+   sie beschnitten werden. Ein Portraet darf nicht ins Gesicht gezoomt wirken. */
 .voll .duo-bild img {
-  max-height: 66svh;
-  width: 100%;
-  object-fit: cover;
-  object-position: center 26%;
+  max-height: 68svh;
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  object-fit: contain;
 }
 
 /* Die feste Kopfzeile darf den Anfang eines Abschnitts nicht verdecken */
@@ -421,6 +425,18 @@ section { position: relative; }
 
 .duo-bild { position: relative; }
 .duo-bild img { width: 100%; }
+
+/* Bild laeuft bis zum Bildschirmrand, damit es Gewicht bekommt */
+.duo--randbild { align-items: center; }
+.duo--randbild .duo-bild { margin-right: calc(var(--seitenrand) * -1); }
+.duo--randbild .duo-bild img {
+  width: 100%;
+  max-width: none;
+  max-height: 76svh;
+  object-fit: cover;
+  margin-inline: 0;
+}
+
 .duo-bild--rahmen::before {
   content: '';
   position: absolute;
@@ -747,10 +763,11 @@ form { display: grid; gap: 1.25rem; }
 }
 .seitenkopf--duo .duo { align-items: center; }
 .seitenkopf--duo .duo-bild img {
-  max-height: min(62svh, 620px);
-  width: 100%;
-  object-fit: cover;
-  object-position: center 22%;
+  max-height: min(66svh, 660px);
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+  object-fit: contain;
 }
 .seitenkopf--duo h1 { font-size: clamp(2rem, 1.3rem + 2.6vw, 3.4rem); }
 @media (max-width: 900px) {
@@ -800,6 +817,10 @@ form { display: grid; gap: 1.25rem; }
   .breitbild { width: 100%; margin-block: clamp(2.5rem, 5vw, 4rem); }
   .duo { grid-template-columns: 1fr; }
   .duo--gedreht .duo-bild { order: 0; }
+  /* Am Handy fuellt das Bild ohnehin die volle Spalte, der Ausbruch ueber den
+     Rand entfaellt. Er wuerde je nach Bildlaufleiste ein paar Pixel zu breit. */
+  .duo--randbild .duo-bild { margin-inline: 0; }
+  .duo--randbild .duo-bild img { max-height: 52svh; }
   .kontakt-raster { grid-template-columns: 1fr; }
   .fuss-raster { grid-template-columns: 1fr 1fr; }
   .schritt::after { display: none; }

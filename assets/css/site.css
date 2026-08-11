@@ -426,13 +426,16 @@ section { position: relative; }
 .duo-bild { position: relative; }
 .duo-bild img { width: 100%; }
 
-/* Bild laeuft bis zum Bildschirmrand, damit es Gewicht bekommt */
-.duo--randbild { align-items: center; }
-.duo--randbild .duo-bild { margin-right: calc(var(--seitenrand) * -1); }
-.duo--randbild .duo-bild img {
+/* Bild bekommt mehr Gewicht, bleibt aber innerhalb der Bahn. Am Rand kleben
+   sah nicht gut aus, deshalb wird stattdessen die Spalte breiter. */
+.duo--grossbild {
+  grid-template-columns: 0.82fr 1.18fr;
+  align-items: center;
+}
+.duo--grossbild .duo-bild img {
   width: 100%;
   max-width: none;
-  max-height: 76svh;
+  max-height: 72svh;
   object-fit: cover;
   margin-inline: 0;
 }
@@ -810,6 +813,20 @@ form { display: grid; gap: 1.25rem; }
   .js .zeigt-sich { opacity: 1; transform: none; transition: none; }
 }
 
+
+/* ------------------------------------------- Niedrige Bildschirme, Laptops */
+@media (max-height: 900px) and (min-width: 901px) {
+  .abschnitt { padding-block: clamp(3rem, 5vh, 4.5rem); }
+  .voll { justify-content: flex-start; padding-top: clamp(5.5rem, 9vh, 7rem); }
+  .voll .duo-bild img { max-height: 58svh; }
+  .duo--grossbild .duo-bild img { max-height: 62svh; }
+  .angebot-bild { aspect-ratio: 4 / 3; margin-bottom: 1rem; }
+  .karte img { aspect-ratio: 7 / 5; }
+  .angebote, .karten, .schritte, .galerie { margin-top: clamp(1.6rem, 3vh, 2.4rem); }
+  h2 { font-size: clamp(1.8rem, 1.2rem + 2vw, 2.8rem); }
+  .seitenkopf--duo { padding-block: clamp(6rem, 9vh, 7.5rem) clamp(2rem, 4vh, 3rem); }
+}
+
 /* ------------------------------------------------------------------ Handy */
 @media (max-width: 900px) {
   .karten { grid-template-columns: 1fr; max-width: 34rem; margin-inline: auto; }
@@ -817,10 +834,8 @@ form { display: grid; gap: 1.25rem; }
   .breitbild { width: 100%; margin-block: clamp(2.5rem, 5vw, 4rem); }
   .duo { grid-template-columns: 1fr; }
   .duo--gedreht .duo-bild { order: 0; }
-  /* Am Handy fuellt das Bild ohnehin die volle Spalte, der Ausbruch ueber den
-     Rand entfaellt. Er wuerde je nach Bildlaufleiste ein paar Pixel zu breit. */
-  .duo--randbild .duo-bild { margin-inline: 0; }
-  .duo--randbild .duo-bild img { max-height: 52svh; }
+  .duo--grossbild { grid-template-columns: 1fr; }
+  .duo--grossbild .duo-bild img { max-height: 52svh; }
   .kontakt-raster { grid-template-columns: 1fr; }
   .fuss-raster { grid-template-columns: 1fr 1fr; }
   .schritt::after { display: none; }

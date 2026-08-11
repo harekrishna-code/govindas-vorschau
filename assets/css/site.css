@@ -410,60 +410,58 @@ section { position: relative; }
   z-index: -1;
 }
 
-/* ------------------------------------ Drei Saeulen direkt unter dem Titel */
-.saeulen-band {
-  background: var(--leinen-tief);
-  border-bottom: 1px solid rgba(10, 74, 32, .12);
-  padding: clamp(2.6rem, 2rem + 2.4vw, 4rem) 0;
+/* -------------------------------- Grosses Bild ueber die volle Seitenbreite */
+.breitbild {
+  width: min(1500px, 100% - 3rem);
+  margin: clamp(3.5rem, 5vw, 6rem) auto;
 }
-.saeulen {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.breitbild img { width: 100%; }
+
+/* ----------------------- Die drei Aussagen, Bilder aus dem alten Auftritt */
+.karten {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1.8rem, 4vw, 4rem);
+  gap: clamp(1.2rem, 2.5vw, 2.4rem);
 }
-.saeulen li { position: relative; }
-.saeulen li + li::before {
-  content: '';
-  position: absolute;
-  left: clamp(-.9rem, -2vw, -2rem);
-  top: .2rem;
-  bottom: .2rem;
-  width: 1px;
-  background: rgba(10, 74, 32, .16);
+.karte {
+  background: var(--leinen-hell);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 0 rgba(10, 74, 32, .1);
 }
-.saeule-zahl {
+.karte img {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+}
+.karte-text {
+  padding: clamp(1.4rem, 2.4vw, 2.2rem) clamp(1.2rem, 2vw, 1.8rem) clamp(1.8rem, 3vw, 2.6rem);
+  text-align: center;
+}
+.karte-seit {
   display: block;
   font-family: var(--serif);
-  font-size: clamp(2.4rem, 1.8rem + 1.7vw, 3.4rem);
-  line-height: 1;
+  font-style: italic;
+  font-size: 1.15rem;
   color: var(--safran);
-  margin-bottom: .45rem;
-  font-variation-settings: 'WONK' 1, 'opsz' 72;
+  margin-bottom: .5rem;
+  font-variation-settings: 'SOFT' 20, 'WONK' 1;
 }
-.saeulen h3 {
-  font-family: var(--sans);
-  font-size: .74rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gruen);
-  margin-bottom: .5em;
-  line-height: 1.4;
-}
-.saeulen p {
-  font-size: .93rem;
-  line-height: 1.6;
-  color: var(--grau);
+.karte h3 {
   margin: 0;
+  font-size: clamp(1.15rem, 1rem + .6vw, 1.5rem);
+  color: var(--gruen-tief);
+  line-height: 1.2;
 }
 
-@media (max-width: 720px) {
-  .saeulen { grid-template-columns: 1fr; gap: 1.6rem; }
-  .saeulen li + li::before { display: none; }
-  .saeulen li + li { border-top: 1px solid rgba(10, 74, 32, .14); padding-top: 1.6rem; }
+/* Bildunterschrift, wie im alten Auftritt unter dem Portraet */
+.bildunterschrift {
+  margin: .9rem 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--erde);
+  text-align: center;
 }
 
 /* --------------------------------------------------------------- Angebote */
@@ -525,6 +523,14 @@ section { position: relative; }
   text-wrap: balance;
 }
 .zitat blockquote p { max-width: none; margin: 0; color: inherit; }
+.zitat-deutsch {
+  max-width: 46rem;
+  margin: 0 auto 1.6rem;
+  font-size: clamp(.98rem, .93rem + .3vw, 1.12rem);
+  line-height: 1.7;
+  color: rgba(247, 241, 229, .78) !important;
+  font-weight: 300;
+}
 .zitat cite {
   font-family: var(--sans);
   font-style: normal;
@@ -547,8 +553,9 @@ section { position: relative; }
   margin-top: clamp(2.5rem, 4vw, 3.5rem);
   counter-reset: schritt;
 }
-.schritt { position: relative; padding-top: 2.6rem; }
-.schritt::before {
+.schritt { position: relative; padding-top: .2rem; }
+.schritte--nummern .schritt { padding-top: 2.6rem; }
+.schritte--nummern .schritt::before {
   counter-increment: schritt;
   content: counter(schritt, decimal-leading-zero);
   position: absolute;
@@ -558,7 +565,7 @@ section { position: relative; }
   color: var(--safran);
   font-variation-settings: 'WONK' 1;
 }
-.schritt::after {
+.schritte--nummern .schritt::after {
   content: '';
   position: absolute;
   top: 1.1rem; left: 3.2rem; right: -1.6rem;
@@ -566,9 +573,14 @@ section { position: relative; }
   background: linear-gradient(to right, var(--safran), transparent);
   opacity: .55;
 }
-.schritt:last-child::after { display: none; }
+.schritte--nummern .schritt:last-child::after { display: none; }
 .schritt h3 { font-size: 1.2rem; margin-bottom: .4em; }
 .schritt p { font-size: .95rem; color: var(--grau); }
+/* Ohne Nummern trennt eine feine Linie oben */
+.schritte:not(.schritte--nummern) .schritt {
+  border-top: 1px solid var(--safran);
+  padding-top: 1.4rem;
+}
 
 /* --------------------------------------------------------------- Galerie */
 .galerie {
@@ -740,6 +752,9 @@ form { display: grid; gap: 1.25rem; }
 
 /* ------------------------------------------------------------------ Handy */
 @media (max-width: 900px) {
+  .karten { grid-template-columns: 1fr; max-width: 34rem; margin-inline: auto; }
+  .karte img { aspect-ratio: 16 / 10; }
+  .breitbild { width: 100%; margin-block: clamp(2.5rem, 5vw, 4rem); }
   .duo { grid-template-columns: 1fr; }
   .duo--gedreht .duo-bild { order: 0; }
   .kontakt-raster { grid-template-columns: 1fr; }

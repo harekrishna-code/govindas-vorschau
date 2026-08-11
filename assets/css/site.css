@@ -540,6 +540,40 @@ body.nav-offen .kopf {
   text-align: center;
 }
 
+/* ------------------------------------------------------------- Leistungen */
+/* Ohne Bilder. Ausschnitte aus dem Titelbild erklaerten nichts, sie waren nur
+   Fuellmaterial. Stattdessen traegt hier die Schrift, jede Leistung als
+   ruhige Zeile mit einer feinen Linie darunter. */
+.leistungen {
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
+  border-top: 1px solid rgba(217, 147, 18, .45);
+}
+.leistung {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(1.2rem, 4vw, 4rem);
+  align-items: baseline;
+  padding: clamp(1.8rem, 3vw, 2.6rem) 0;
+  border-bottom: 1px solid rgba(217, 147, 18, .45);
+  transition: background .4s var(--ruhig);
+}
+.leistung:hover { background: rgba(240, 168, 12, .05); }
+.leistung h3 {
+  margin: 0;
+  font-size: clamp(1.45rem, 1.15rem + 1.1vw, 2.15rem);
+  color: var(--gruen-tief);
+  line-height: 1.15;
+}
+.leistung p {
+  margin: 0;
+  color: var(--grau);
+  max-width: 46ch;
+}
+
+@media (max-width: 720px) {
+  .leistung { grid-template-columns: 1fr; gap: .7rem; }
+}
+
 /* --------------------------------------------------------------- Angebote */
 .angebote {
   display: grid;
